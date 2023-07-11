@@ -87,6 +87,7 @@ exports.restrictTO = (...roles)=>{
         }
         next()
 }}
+
 exports.forgetPassword =catchAsync( async(req,res,next)=>{
     //1) get user by his Email
     const user = await User.findOne({email:req.body.email})
@@ -112,6 +113,7 @@ exports.forgetPassword =catchAsync( async(req,res,next)=>{
         return next(new AppError('There was an error sending the email, try again later!',500));
     }
     })
+
 exports.resetPassword = catchAsync(async (req,res,next)=>{
     //1) Get user based on Token
     const hashedToken = crypto.createHash('sha256').update(req.params.token).digest('hex')
@@ -133,6 +135,7 @@ exports.resetPassword = catchAsync(async (req,res,next)=>{
 exports.updatePassword =catchAsync( async (req,res,next)=>{
     //1) get user from collection
     const user = await User.findById(req.user.id).select('+password')
+    console.log(req.user)
     //2) check if posted password is correct
     if(! await user.correctPassword(req.body.currentPassword,user.password)){
         return next(new AppError('your current password is wrong',401))

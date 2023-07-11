@@ -7,5 +7,8 @@ router.post('/login',authController.logIn)
 router.post('/forgetPassword',authController.forgetPassword)
 router.patch('/resetPassword/:token',authController.resetPassword)
 
+router.use(authController.protect)
+
+router.patch('/updateMyPassword',authController.updatePassword)
 
 module.exports = router
