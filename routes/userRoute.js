@@ -18,4 +18,15 @@ router.patch('/updateMe',userController.uploadUserPhoto,userController.resizeUse
 router.delete('/deleteMe',userController.deleteMe)
 router.get('/me',userController.getMe,userController.getOneUser)
 
+// router.use(authController.restrictTO('admin'))
+
+router
+.route('/')
+.get(userController.getAllUsers)
+router
+.route('/:id')
+.get(userController.getOneUser)
+.patch(userController.updateUser)
+.delete(userController.deleteUser)
+
 module.exports = router
