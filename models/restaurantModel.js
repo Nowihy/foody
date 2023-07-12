@@ -9,7 +9,10 @@ const restaurantSchema = mongoose.Schema({
         required:true,
     },
     slug:String,
-    image:String,
+    image:{
+        type:String,
+        default:'default.jpg'
+    },
     typeOfFood:{
         type:[String],
         required:[true,'A Restaurant must have type of Food'],

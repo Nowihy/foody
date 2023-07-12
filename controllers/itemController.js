@@ -2,6 +2,36 @@ const Item = require('../models/itemModel')
 const AppError = require('../utils/appError')
 const catchAsync = require('./../utils/catchAsync')
 const Factory = require('./factoryHandler')
+const multer = require('multer')
+const sharp = require('sharp')
+
+const multerStorage = multer.memoryStorage()
+
+const multerFilter = (req,file,cb)=>{
+    if(file.mimetype.startsWith('image')){
+        cb(null,true)
+    }else{
+        cb(new AppError('It is not an image, please upload an image',400),false)
+    }
+}
+
+const upload = multer({
+    storage:multerStorage,
+    fileFilter:multerFilter
+})
+
+exports.uploadItemPhoto = upload.single('photo')
+
+exports.resizeItemPhoto =catchAsync(async(req,res,next)=>{
+    req.file.filename = `item-${req.params.id}-${Date.now()}.jpeg`
+    if(!req.file) return next() ;
+    await sharp(req.file.buffer)
+    .resize(500,500)
+    .toFormat('jpeg')
+    .jpeg({quality:99})
+    .toFile(`public/img/items/${req.file.filename}`)
+    next()
+})
 
 exports.setRestaurantAndUserIDs=(req,res,next)=>{
     //allow nested route 

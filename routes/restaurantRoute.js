@@ -3,6 +3,9 @@ const router = express.Router()
 const restaurantController = require('./../controllers/restaurantController')
 const itemController = require('./../controllers/itemController')
 const itemRouter = require('./itemRoute')
+const authController = require('./../controllers/authController')
+
+router.use(authController.protect)
 
 router
 .route('/')
@@ -10,7 +13,7 @@ router
 .post(restaurantController.createRestaurant)
 
 router.route('/:id')
-.patch(restaurantController.updateRestaurant)
+.patch(restaurantController.uploadRestaurantPhoto,restaurantController.resizeRestaurantPhoto,restaurantController.updateRestaurant)
 .delete(restaurantController.deleteRestaurant)
 .get(restaurantController.getOneRestaurant)
 

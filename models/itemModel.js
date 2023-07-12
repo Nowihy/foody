@@ -12,7 +12,10 @@ const itemSchema = mongoose.Schema({
         type:[String],
         required:[true,'Item must have component']
     },
-    photo:String,
+    photo:{
+        type:String,
+        default:'default.jpg'
+    },
     price:{
         type:Number,
         required:[true,'A tour must have a price']

@@ -14,7 +14,7 @@ router
 router
 .route('/:id')
 .get(itemController.getOneItem)
-.patch(itemController.updateItem)
+.patch(itemController.uploadItemPhoto,itemController.resizeItemPhoto,itemController.updateItem)
 .delete(itemController.deleteItem);
 
 
