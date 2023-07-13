@@ -3,7 +3,7 @@ const router = express.Router({mergeParams:true})
 const ratingController = require('./../controllers/ratingController')
 const authController = require('./../controllers/authController')
 
-// router.use(authController.protect)
+router.use(authController.protect)
 
 router.route('/')
 .get(ratingController.getAllRatings)

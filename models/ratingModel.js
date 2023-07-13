@@ -82,15 +82,15 @@ ratingSchema.post('save',function(){
     this.constructor.calcAverageRatings(this.restaurant)
 })
 
-ratingSchema.pre(/^findOneAnd/, async function (next) {
-    this.r = await this.findOne();
-    next();
-});
+// ratingSchema.pre(/^findOneAnd/, async function (next) {
+//     this.r = await this.findOne();
+//     next();
+// });
 
-ratingSchema.post(/^findOneAnd/, async function () {
-    // await this.findOne()--> doesn't work here, the query has already been executed
-    await this.r.constructor.calcAverageRatings(this.r.restaurant);
-});
+// ratingSchema.post(/^findOneAnd/, async function () {
+//     // await this.findOne()--> doesn't work here, the query has already been executed
+//     await this.r.constructor.calcAverageRatings(this.r.restaurant);
+// });
 
 const Rating = mongoose.model('Rating',ratingSchema)
 
