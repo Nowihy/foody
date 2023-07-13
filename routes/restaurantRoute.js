@@ -4,6 +4,7 @@ const restaurantController = require('./../controllers/restaurantController')
 const itemController = require('./../controllers/itemController')
 const itemRouter = require('./itemRoute')
 const authController = require('./../controllers/authController')
+const ratingRouter = require('./ratingRoute')
 
 router.use(authController.protect)
 
@@ -24,5 +25,7 @@ router.route('/:id')
 // )
 
 router.use('/:restaurantId/items',itemRouter)
+router.use('/:restaurantId/ratings',ratingRouter)
+
 
 module.exports=router

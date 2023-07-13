@@ -7,7 +7,7 @@ router
 .route('/')
 .get(itemController.getAllItems)
 .post(
-    itemController.setRestaurantAndUserIDs,
+    itemController.setRestaurantIDs,
     itemController.createItem
 );
 

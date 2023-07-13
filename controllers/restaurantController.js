@@ -50,7 +50,7 @@ exports.createRestaurant = Factory.createOne(Restaurant)
 exports.deleteRestaurant = Factory.deleteOne(Restaurant)
 exports.updateRestaurant = Factory.updateOne(Restaurant)
 exports.getAllRestaurants = Factory.getAll(Restaurant)
-exports.getOneRestaurant = Factory.getOne(Restaurant,{path:'items'})
+exports.getOneRestaurant = Factory.getOne(Restaurant,{path:'items',path:'ratings'})
 
 // function generateToken(payload) {
 // const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1d' });

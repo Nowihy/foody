@@ -82,6 +82,13 @@ restaurantSchema.virtual('items',{
     localField:'_id'
 })
 
+//to show rating in restaurant schema
+restaurantSchema.virtual('ratings', {
+    ref: 'Rating',
+    foreignField: 'restaurant',
+    localField: '_id'
+});
+
 restaurantSchema.pre('save',function(next){
     this.slug =slugify(this.name,{lower:true})
     next()
