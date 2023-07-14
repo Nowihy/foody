@@ -74,6 +74,10 @@ const restaurantSchema = mongoose.Schema({
     toObject:{virtuals:true}
 })
 
+//ascendeng ratingsAverage
+restaurantSchema.index({ratingsAverage:-1})
+restaurantSchema.index({slug:1})
+
 
 //to show items in restaurant schema 
 restaurantSchema.virtual('items',{

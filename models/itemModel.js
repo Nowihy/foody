@@ -41,7 +41,7 @@ const itemSchema = mongoose.Schema({
     toObject:{virtuals:true}
 })
 
-itemSchema.index({restaurant:1})
+itemSchema.index({price:1})
 
 itemSchema.pre(/^find/,function(next){
     this.populate({
