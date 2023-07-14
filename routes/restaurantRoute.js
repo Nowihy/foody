@@ -8,6 +8,15 @@ const ratingRouter = require('./ratingRoute')
 
 router.use(authController.protect)
 
+
+router
+.route('/restaurants-within/:distance/center/:latlng/unit/:unit')
+.get(restaurantController.getRestaurantWithin)
+
+router
+.route('/distances/:latlng/unit/:unit')
+.get(restaurantController.getDistances)
+
 router
 .route('/')
 .get(restaurantController.getAllRestaurants)

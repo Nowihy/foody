@@ -24,8 +24,8 @@ const upload =multer({
 exports.uploadRestaurantPhoto = upload.single('image')
 
 exports.resizeRestaurantPhoto = catchAsync(async(req,res,next)=>{
-    req.file.filename = `restaurant-${req.params.id}-${Date.now()}.jpeg`
     if(!req.file) return next()
+    req.file.filename = `restaurant-${req.params.id}-${Date.now()}.jpeg`
     await sharp(req.file.buffer)
     .resize(500,500)
     .toFormat('jpeg')
@@ -45,6 +45,64 @@ exports.resizeRestaurantPhoto = catchAsync(async(req,res,next)=>{
 //         data: restaurant
 //     })
 // })
+
+exports.getRestaurantWithin = catchAsync(async(req,res,next)=>{
+    const {distance, latlng , unit} = req.params
+    const [lat,lng] = latlng.split(',')
+    const radius = unit ==='mi' ? distance/3963.2 : distance/6378.1 
+    if(!lat||!lng) {
+        next(new AppError(
+            'Please provide latitutr and longitude on the format of lat,lng..'
+        ))
+    }
+    const restaurants = await Restaurant.find({
+        startLocation:{ $geoWithin: { $centerSphere: [[lng,lat],radius] }}
+    })
+    res.status(200).json({
+        statue : 'success',
+        results: restaurants.length,
+        data:{data:restaurants}
+    })
+})
+
+exports.getDistances = catchAsync(async (req, res, next) => {
+    const { latlng, unit } = req.params;
+    const [lat, lng] = latlng.split(',');
+    if (!lat || !lng) {
+    next(
+        new AppError(
+        'Please provide latitude and longitude in the format lat,lng',
+        400
+        )
+    );
+    }
+    const distances = await Restaurant.aggregate([
+    {
+        $geoNear: {
+        near: {
+            type: 'Point',
+            coordinates: [lng * 1, lat * 1],
+        },
+        spherical: true,
+          distanceField: 'distance', // contains calculated distance
+          distanceMultiplier: 0.001, // m--> k.m, m--> mi
+        },
+    },
+    {
+        $project: {
+        distance: 1,
+          name: 1, // only get these fields
+        },
+    },
+    ]);
+    res.status(200).json({
+    status: 'success',
+    data: {
+        data: distances,
+    },
+    });
+});
+
 
 exports.createRestaurant = Factory.createOne(Restaurant)
 exports.deleteRestaurant = Factory.deleteOne(Restaurant)

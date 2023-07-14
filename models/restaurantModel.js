@@ -17,7 +17,7 @@ const restaurantSchema = mongoose.Schema({
         type:[String],
         required:[true,'A Restaurant must have type of Food'],
         enum:['pizza','burger','chicken','pasta','dessert','crepe',
-        'sandwich','sushi','drinks','koshry','iftar']
+        'sandwich','sushi','drinks','koshry','iftar','grills']
     },
     ratingsAverage:{
         type:Number,
@@ -51,23 +51,6 @@ const restaurantSchema = mongoose.Schema({
         address:String,
         description:String
     },
-    Locations:[
-        {
-            type:{
-                type:String,
-                default:'point',
-                enum:['point']
-            },
-            coordinates:[Number],
-            address:String,
-            description:String,
-            day:Number
-        }
-    ],
-    // items:[{
-    //     type:mongoose.Schema.ObjectId,
-    //     ref:'Item'
-    // }]
 },
 {
     toJSON:{virtuals:true},
@@ -77,6 +60,9 @@ const restaurantSchema = mongoose.Schema({
 //ascendeng ratingsAverage
 restaurantSchema.index({ratingsAverage:-1})
 restaurantSchema.index({slug:1})
+restaurantSchema.index({startLocation:'2dsphere'})
+// restaurantSchema.index({ startLocation: '2dsphere' }, { name: 'startLocationIndex' });
+
 
 
 //to show items in restaurant schema 
