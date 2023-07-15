@@ -20,11 +20,11 @@ router
 router
 .route('/')
 .get(restaurantController.getAllRestaurants)
-.post(restaurantController.createRestaurant)
+.post(authController.restrictTO('admin','res-admin'),restaurantController.createRestaurant)
 
 router.route('/:id')
-.patch(restaurantController.uploadRestaurantPhoto,restaurantController.resizeRestaurantPhoto,restaurantController.updateRestaurant)
-.delete(restaurantController.deleteRestaurant)
+.patch(authController.restrictTO('admin','res-admin'),restaurantController.uploadRestaurantPhoto,restaurantController.resizeRestaurantPhoto,restaurantController.updateRestaurant)
+.delete(authController.restrictTO('admin','res-admin'),restaurantController.deleteRestaurant)
 .get(restaurantController.getOneRestaurant)
 
 // router.route('/:resataurantId/items')

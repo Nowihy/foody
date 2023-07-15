@@ -31,7 +31,7 @@ const itemSchema = mongoose.Schema({
     },
     restaurant:{
         type:mongoose.Schema.ObjectId,
-        require:[true,'An Item must belong to restaurant'],
+        required:[true,'An Item must belong to restaurant'],
         ref:'restaurant'
     },
 

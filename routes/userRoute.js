@@ -11,9 +11,6 @@ router.patch('/resetPassword/:token',authController.resetPassword)
 router.use(authController.protect)
 
 router.patch('/updateMyPassword',authController.updatePassword)
-router.use(authController.protect)
-
-router.patch('/updateMyPassword',authController.updatePassword)
 router.patch('/updateMe',userController.uploadUserPhoto,userController.resizeUserPhoto,userController.updateMe)
 router.delete('/deleteMe',userController.deleteMe)
 router.get('/me',userController.getMe,userController.getOneUser)
@@ -22,11 +19,11 @@ router.get('/me',userController.getMe,userController.getOneUser)
 
 router
 .route('/')
-.get(userController.getAllUsers)
+.get(authController.restrictTO('admin'),userController.getAllUsers)
 router
 .route('/:id')
 .get(userController.getOneUser)
-.patch(userController.updateUser)
-.delete(userController.deleteUser)
+.patch(authController.restrictTO('admin'),userController.updateUser)
+.delete(authController.restrictTO('admin'),userController.deleteUser)
 
 module.exports = router

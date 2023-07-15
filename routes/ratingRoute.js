@@ -7,10 +7,10 @@ router.use(authController.protect)
 
 router.route('/')
 .get(ratingController.getAllRatings)
-.post(ratingController.setRestaurantandUserIDs,ratingController.createRating)
+.post(authController.restrictTO('admin','user'),ratingController.setRestaurantandUserIDs,ratingController.createRating)
 router.route('/:id')
 .get(ratingController.getOneRating)
-.patch(ratingController.updateRating)
-.delete(ratingController.deleteRating)
+.patch(authController.restrictTO('admin','user'),ratingController.updateRating)
+.delete(authController.restrictTO('admin','user'),ratingController.deleteRating)
 
 module.exports = router

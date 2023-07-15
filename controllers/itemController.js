@@ -35,10 +35,7 @@ exports.resizeItemPhoto =catchAsync(async(req,res,next)=>{
 
 exports.setRestaurantIDs=(req,res,next)=>{
     //allow nested route 
-    // if(!req.body.user) req.body.user = req.user.id
     if(!req.body.restaurant) req.body.restaurant = req.params.restaurantId
-    console.log(req.params.restaurantId)
-    console.log(req.body.restaurant)
     next()
 }
 

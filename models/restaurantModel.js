@@ -90,7 +90,7 @@ restaurantSchema.pre(/^find/,function(next){
     next()
 })
 
-//middle ware is triggered many times
+//middleware is triggered many times
 // restaurantSchema.pre(/^find/,function(next){
 //     console.log('Middleware triggered');
 //     this.populate({
