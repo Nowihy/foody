@@ -5,8 +5,12 @@ const restaurantRoute = require('./routes/restaurantRoute')
 const itemRoute = require('./routes/itemRoute')
 const userRoute = require('./routes/userRoute')
 const ratingRoute = require('./routes/ratingRoute')
+const orderRoute = require('./routes/orderRoute')
+const notificationRoute = require('./routes/notificationRoute')
+const payRoute = require('./routes/paymentRoute')
+const AppError = require('./utils/appError');
+const catchAsync = require('./utils/catchAsync')
 
-const AppError = require('./utils/appError')
 
 app.use(express.json())
 
@@ -23,6 +27,9 @@ app.use('/api/v1/restaurants',restaurantRoute)
 app.use('/api/v1/items',itemRoute)
 app.use('/api/v1/users',userRoute)
 app.use('/api/v1/ratings',ratingRoute)
+app.use('/api/v1/orders',orderRoute)
+app.use('/api/v1/notifications',notificationRoute)
+app.use('/api/v1/pay',payRoute)
 
 app.all('*',(req,res,next)=>{
     next(new AppError(`Can not find ${req.originalUrl} on this server !`, 404 ))
