@@ -14,7 +14,7 @@ exports.placeOrder = catchAsync(async (req, res, next) => {
         // console.log(itemId)
         const itemData = await Item.findById(itemId);
         totalPrice += quantity*itemData.price ;
-        console.log(totalPrice)
+        // console.log(totalPrice)
     }
       // Create the order document
     const order = await Order.create({

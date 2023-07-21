@@ -1,6 +1,11 @@
 const mongoose = require('mongoose')
 
 const orderSchema = mongoose.Schema({
+    name:{
+        required:[true,'Order must have name'],
+        type:String,
+        default: 'your order'
+    },
     user : {
         required:[true,'Order must belong to user'],
         type:mongoose.Schema.ObjectId,
