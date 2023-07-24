@@ -9,7 +9,7 @@ const orderRoute = require('./routes/orderRoute')
 const notificationRoute = require('./routes/notificationRoute')
 const payRoute = require('./routes/paymentRoute')
 const bookingRoute = require('./routes/bookingRoute')
-const bookingController = require('./routes/bookingRoute')
+const bookingController = require('./controllers/bookingController')
 const AppError = require('./utils/appError');
 const catchAsync = require('./utils/catchAsync')
 
