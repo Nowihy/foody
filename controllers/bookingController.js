@@ -11,7 +11,7 @@ exports.createSessionCheckout = catchAsync(async(req,res,next)=>{
     // const user = req.user 
     // const price = order.totalPrice
     const session = await stripe.checkout.sessions.create({
-        success_url: `${req.protocol}://${req.get('host')}/`,
+        success_url: `${req.protocol}://${req.get('host')}/api/v1/restaurants`,
         cancel_url: `${req.protocol}://${req.get('host')}/`,
         line_items: [{
             quantity: 1,
@@ -47,31 +47,35 @@ exports.createSessionCheckout = catchAsync(async(req,res,next)=>{
 //     next()
 // })
 
-const createBookingCheckout = async session => {
+const createBookingCheckout = async (session) => {
     const order = session.client_reference_id;
     const user = (await User.findOne({ email: session.customer_email })).id;
-    const price = session.display_items[0].amount / 100;
+    const price = (session.display_items && session.display_items.length > 0) 
+      ? session.display_items[0].amount / 100 
+      : 0;
+  
     await Booking.create({ order, user, price });
-};
-
-exports.webhookCheckout = (req, res, next) => {
+  };
+  
+  exports.webhookCheckout = (req, res, next) => {
     const signature = req.headers['stripe-signature'];
     let event;
     try {
-    event = stripe.webhooks.constructEvent(
+      event = stripe.webhooks.constructEvent(
         req.body,
         signature,
         process.env.STRIPE_WEBHOOK_SECRET
-    );
+      );
     } catch (err) {
-    return res.status(400).send(`Webhook error: ${err.message}`);
+      return res.status(400).send(`Webhook error: ${err.message}`);
     }
-
-    if (event.type === 'checkout.session.completed')
-    createBookingCheckout(event.data.object);
+  
+    if (event.type === 'checkout.session.completed') {
+      createBookingCheckout(event.data.object);
+    }
     res.status(200).json({ received: true });
-};
-
+  };
+  
 
 exports.createBooking = Factory.createOne(Booking)
 exports.getOneBooking = Factory.getOne(Booking)
