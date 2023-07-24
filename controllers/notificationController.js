@@ -11,7 +11,7 @@ const catchAsync = require('./../utils/catchAsync')
 
 // Schedule the task to run every week (e.g., every Sunday at 9:00 AM)
 
-    cron.schedule('0 9 * * 0', exports.pushNotification= catchAsync(async(req,res,next) => {
+    cron.schedule('* * * * Sunday,Wednesday', exports.pushNotification= catchAsync(async(req,res,next) => {
     
     // Generate random notifications
     const notifications = generateRandomNotifications();
@@ -24,10 +24,10 @@ const catchAsync = require('./../utils/catchAsync')
     await NotificationService.sendNotification(user, notifications);
     }
     console.log('Random notifications sent successfully!');
-    res.status(200).json({
-        statue:'success',
-        data: notifications
-    })
+    // res.status(200).json({
+    //     statue:'success',
+    //     data: notifications
+    // })
 }));
 
 // Function to generate random notifications

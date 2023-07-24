@@ -9,9 +9,15 @@ const orderRoute = require('./routes/orderRoute')
 const notificationRoute = require('./routes/notificationRoute')
 const payRoute = require('./routes/paymentRoute')
 const bookingRoute = require('./routes/bookingRoute')
+const bookingController = require('./routes/bookingRoute')
 const AppError = require('./utils/appError');
 const catchAsync = require('./utils/catchAsync')
 
+
+//it should be before express.json 
+app.post('/webhook-checkout',
+express.raw({type:'application/json'}),
+bookingController.webhookCheckout)
 
 app.use(express.json())
 
@@ -23,6 +29,7 @@ app.use((req,res,next)=>{
     req.requestTime = new Date().toISOString() ;
     next() ;
 })
+
 
 app.use('/api/v1/restaurants',restaurantRoute)
 app.use('/api/v1/items',itemRoute)

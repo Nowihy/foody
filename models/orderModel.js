@@ -4,7 +4,7 @@ const orderSchema = mongoose.Schema({
     name:{
         required:[true,'Order must have name'],
         type:String,
-        default: 'your order'
+        default: 'My Order'
     },
     user : {
         required:[true,'Order must belong to user'],
