@@ -9,18 +9,22 @@ exports.placeOrder = catchAsync(async (req, res, next) => {
     const { items } = req.body;
       // Calculate the total price
     let totalPrice = 0;
+    let totalQuantity = 0
     for (const item of items) {
         const { itemId, quantity } = item;
         // console.log(itemId)
         const itemData = await Item.findById(itemId);
         totalPrice += quantity*itemData.price ;
+        totalQuantity += quantity
+        // console.log(totalQuantity)
         // console.log(totalPrice)
     }
       // Create the order document
     const order = await Order.create({
         user: req.user.id,
         items,
-        totalPrice
+        totalPrice,
+        totalQuantity
     });
     res.status(201).json({
         status: 'success',

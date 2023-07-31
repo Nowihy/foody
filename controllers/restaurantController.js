@@ -16,9 +16,9 @@ const multerFilter = (req,file,cb)=>{
     }
 }
 
-const upload =multer({
-    storage: multerStorage,
-    fileFilter:multerFilter
+const upload = multer({
+    storage:multerStorage,
+    fileFilter: multerFilter
 })
 
 exports.uploadRestaurantPhoto = upload.single('image')
@@ -108,7 +108,11 @@ exports.createRestaurant = Factory.createOne(Restaurant)
 exports.deleteRestaurant = Factory.deleteOne(Restaurant)
 exports.updateRestaurant = Factory.updateOne(Restaurant)
 exports.getAllRestaurants = Factory.getAll(Restaurant)
-exports.getOneRestaurant = Factory.getOne(Restaurant,{path:'items',path:'ratings'})
+const popOptions = [
+    { path: 'items', select: 'name component photo price -restaurant' },
+    { path: 'ratings', select: 'rating user -restaurant' }
+];
+exports.getOneRestaurant = Factory.getOne(Restaurant,popOptions)
 
 // function generateToken(payload) {
 // const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1d' });

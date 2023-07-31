@@ -39,13 +39,20 @@ exports.createOne=Model=>catchAsync( async (req,res,next)=>{
 
 exports.getOne=(Model,popOptions)=>catchAsync( async (req,res,next)=>{
     let query =Model.findById(req.params.id)
-    if(popOptions)query=query.populate(popOptions)
+    if (Array.isArray(popOptions)) {
+        popOptions.forEach(option => {
+        query = query.populate(option);
+        });
+    } else if (popOptions) {
+        // If popOptions is not an array but a single option, populate it directly
+        query = query.populate(popOptions);
+    }
     const doc =await query
     if(!doc){
         return next(new AppError('There is no Document found by this ID',404)
         )}
         return res.status(200).json({
-            statue:'success',       
+            statue:'success', 
             data:{
                 data:doc
             }

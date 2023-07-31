@@ -23,8 +23,8 @@ const upload = multer({
 exports.uploadItemPhoto = upload.single('photo')
 
 exports.resizeItemPhoto =catchAsync(async(req,res,next)=>{
-    req.file.filename = `item-${req.params.id}-${Date.now()}.jpeg`
     if(!req.file) return next() ;
+    req.file.filename = `item-${req.params.id}-${Date.now()}.jpeg`
     await sharp(req.file.buffer)
     .resize(500,500)
     .toFormat('jpeg')

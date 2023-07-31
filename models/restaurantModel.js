@@ -17,7 +17,7 @@ const restaurantSchema = mongoose.Schema({
         type:[String],
         required:[true,'A Restaurant must have type of Food'],
         enum:['pizza','burger','chicken','pasta','dessert','crepe',
-        'sandwich','sushi','drinks','koshry','iftar','grills']
+        'sandwich','sushi','drinks','koshry','iftar','grills','shawerma','fish','liver']
     },
     ratingsAverage:{
         type:Number,
@@ -66,10 +66,10 @@ restaurantSchema.index({startLocation:'2dsphere'})
 
 
 //to show items in restaurant schema 
-restaurantSchema.virtual('items',{
-    ref:'item',
-    foreignField:'restaurant',
-    localField:'_id'
+restaurantSchema.virtual('items', {
+    ref: 'item',
+    foreignField: 'restaurant',
+    localField: '_id'
 })
 
 //to show rating in restaurant schema

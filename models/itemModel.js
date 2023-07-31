@@ -8,6 +8,7 @@ const itemSchema = mongoose.Schema({
         required:[true,'Item must have name'],
         unique:[true,'Item name must be unique']
     },
+    slug:String,
     component:{
         type:[String],
         required:[true,'Item must have component']
