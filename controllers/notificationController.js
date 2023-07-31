@@ -36,8 +36,8 @@ function generateRandomNotifications() {
   // You can return an array of notification objects with desired attributes
   // Example:
 return [
-    { title: 'Notification 1', message: 'This is a random notification.' },
-    { title: 'Notification 2', message: 'Another random notification.' },
+    { title: 'Notification', message: 'there are new offers' },
+    // { title: 'Notification 2', message: 'Another random notification.' },
     // Add more notifications as needed
 ];
 }
