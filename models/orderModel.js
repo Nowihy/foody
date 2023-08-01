@@ -35,6 +35,22 @@ const orderSchema = mongoose.Schema({
     createdAt: {
         type: Date,
         default: Date.now()
+    },
+    statue:{
+        type:String,
+        default: 'pending',
+        enum:['delivered','pending','out-for-delivery','confirmed and preparing']
+    },
+    statusUpdatedAt: {
+        type: Date,
+        default: Date.now(),
+    },
+    
+      // Add a field for storing the delivery person's information (optional)
+    deliveryPerson: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required:[true,'order must belong to a delivery person']
     }
 });
 
