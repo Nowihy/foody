@@ -3,3 +3,6 @@ node_modules/
 firebase_admin.json
 chatgptfirebase.js
 firebase.js
+socket.js
+index.html
+readme.md

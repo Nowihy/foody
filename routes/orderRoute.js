@@ -13,6 +13,6 @@ router.route('/:id')
 .get(orderController.getOneOrder)
 .patch(orderController.updateOneOrder)
 
-router.put('/:orderId',authController.restrictTO('delivery'),orderController.updateOrderStatue)
+router.put('/:orderId',authController.restrictTO('delivery'),orderController.protectDelivery,orderController.updateOrderStatue)
 
 module.exports = router;

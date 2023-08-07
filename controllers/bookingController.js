@@ -14,14 +14,14 @@ exports.createSessionCheckout = catchAsync(async(req,res,next)=>{
         success_url: `${req.protocol}://${req.get('host')}/`,
         cancel_url: `${req.protocol}://${req.get('host')}/`,
         line_items: [{
-            quantity: order.totalQuantity,
             price_data:{
                 currency:'egp',
                 unit_amount:order.totalPrice*100,
                 product_data: {
                     name: order.name,
                 },
-            }
+            },
+            quantity: 1,
         },
     ],
         mode: 'payment',
@@ -29,6 +29,9 @@ exports.createSessionCheckout = catchAsync(async(req,res,next)=>{
         // customer: req.user.name,
         customer_email: req.user.email,
     });
+    // console.log(session)
+    // console.log(typeof session.amount_total)
+    // console.log(session.amount_total)
     // await Booking.create({order,user,price})
     res.status(200).json({
         statue:'success',
@@ -49,10 +52,9 @@ exports.createSessionCheckout = catchAsync(async(req,res,next)=>{
 
 const createBookingCheckout = async (session) => {
     const order = session.client_reference_id;
+    const price = session.amount_total / 100
     const user = (await User.findOne({ email: session.customer_email })).id;
-    const price = (session.display_items && session.display_items.length > 0) 
-    ? session.display_items[0].amount / 100 
-    : 0;
+    // const price = session.amount_subtotal / 100; 
     await Booking.create({ order, user, price });
 };
 
