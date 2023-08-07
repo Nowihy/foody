@@ -10,7 +10,6 @@ const catchAsync = require('./../utils/catchAsync')
     const notifications = generateRandomNotifications();
     // console.log(notifications)
     const users = await User.find({});
-    // console.log(users)
     // Send notifications to users
     for (const user of users) {
     await NotificationService.sendNotification(user, notifications);

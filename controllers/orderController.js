@@ -102,4 +102,3 @@ exports.updateOrderStatue = catchAsync(async(req,res,next)=>{
 exports.getAllOrders = Factory.getAll(Order)
 exports.getOneOrder = Factory.getOne(Order)
 exports.deleteOrder = Factory.deleteOne(Order)
-// exports.updateOrder = Factory.updateOne(Order)

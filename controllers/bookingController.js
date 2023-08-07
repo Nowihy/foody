@@ -29,8 +29,6 @@ exports.createSessionCheckout = catchAsync(async(req,res,next)=>{
         // customer: req.user.name,
         customer_email: req.user.email,
     });
-    // console.log(session)
-    // console.log(typeof session.amount_total)
     // console.log(session.amount_total)
     // await Booking.create({order,user,price})
     res.status(200).json({

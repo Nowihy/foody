@@ -35,7 +35,6 @@
     "firebase-admin": "^11.10.1",
     "fs": "^0.0.1-security",
     "helmet": "^7.0.0",
-    "hpp": "^0.2.3",
     "http": "^0.0.1-security",
     "https": "^1.0.0",
     "jsonwebtoken": "^9.0.0",
