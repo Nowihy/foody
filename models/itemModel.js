@@ -15,7 +15,7 @@ const itemSchema = mongoose.Schema({
     },
     photo:{
         type:String,
-        default:'default.jpg'
+        // default:'default.jpg'
     },
     price:{
         type:Number,

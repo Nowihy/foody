@@ -9,6 +9,7 @@ const multerStorage = multer.memoryStorage()
 
 const multerFilter = (req,file,cb)=>{
     if(file.mimetype.startsWith('image')){
+        console.log(file.mimetype)
         cb(null,true)
     }else{
         cb(new AppError('It is not an image, please upload an image',400),false)
@@ -17,18 +18,19 @@ const multerFilter = (req,file,cb)=>{
 
 const upload = multer({
     storage:multerStorage,
-    fileFilter:multerFilter
+    fileFilter: multerFilter
 })
 
 exports.uploadItemPhoto = upload.single('photo')
 
 exports.resizeItemPhoto =catchAsync(async(req,res,next)=>{
-    if(!req.file) return next() ;
     req.file.filename = `item-${req.params.id}-${Date.now()}.jpeg`
+    if(!req.file) return next() ;
+    console.log(req.file)
     await sharp(req.file.buffer)
     .resize(500,500)
     .toFormat('jpeg')
-    .jpeg({quality:99})
+    .jpeg({quality:90})
     .toFile(`public/img/items/${req.file.filename}`)
     next()
 })
